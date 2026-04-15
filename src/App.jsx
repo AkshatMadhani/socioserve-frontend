@@ -5,8 +5,10 @@ import HomePage from './pages/HomePage';
 import ResidentDashboardPage from './pages/Residentsdashboard';
 import SecretaryDashboardPage from './pages/Secretarydashboard';
 import { ToastProvider } from './components/ToastNotification';
+
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = API_BASE_URL;
 
 const AuthContext = createContext();
 
@@ -29,22 +31,17 @@ const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      console.log('🔍 Checking authentication...');
-      
-      const response = await axios.get(`${API_BASE_URL}/auth/me`);
+      const response = await axios.get('/auth/me');
 
       if (response.data.success && response.data.user) {
-        console.log('✅ User authenticated:', response.data.user);
         setUser(response.data.user);
         setIsAuthenticated(true);
         localStorage.setItem('userRole', response.data.user.role);
         localStorage.setItem('userType', response.data.user.role === 'admin' ? 'secretary' : 'resident');
       } else {
-        console.log('❌ User not authenticated');
         clearAuth();
       }
     } catch (error) {
-      console.log('❌ Auth check failed:', error.response?.data?.message || error.message);
       clearAuth();
     } finally {
       setLoading(false);
@@ -61,7 +58,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post(`${API_BASE_URL}/auth/logout`);
+      await axios.post('/auth/logout');
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -103,12 +100,10 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   }
 
   if (!isAuthenticated || !user) {
-    console.log('🚫 Not authenticated, redirecting to home');
     return <Navigate to="/" replace />;
   }
 
   if (requiredRole && user.role !== requiredRole) {
-    console.log('🚫 Wrong role, redirecting to home');
     return <Navigate to="/" replace />;
   }
 

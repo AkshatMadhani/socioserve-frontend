@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FileText, AlertCircle, Clock, CheckCircle, DollarSign, Calendar } from 'lucide-react';
+import { useToast } from './ToastNotification';  
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const ResidentDashboard = ({ userInfo, setActiveTab }) => {
+  const { success, error: errToast } = useToast();  
   const [stats, setStats] = useState({
     totalComplaints: 0,
     pendingComplaints: 0,
@@ -59,6 +62,7 @@ const ResidentDashboard = ({ userInfo, setActiveTab }) => {
       });
     } catch (error) {
       console.error('Error:', error);
+      errToast('Failed to load dashboard data');
     } finally {
       setLoading(false);
     }
@@ -96,8 +100,6 @@ const ResidentDashboard = ({ userInfo, setActiveTab }) => {
           </div>
         </div>
       </div>
-
-      {/* Maintenance Due Card - Only show if there's a pending bill */}
       {stats.hasPendingBill && (
         <div className={`${isDueOverdue ? 'bg-red-50 border-red-500' : 'bg-yellow-50 border-yellow-500'} border-l-4 rounded-xl shadow-lg p-6`}>
           <div className="flex items-center justify-between flex-wrap gap-4">
@@ -130,8 +132,6 @@ const ResidentDashboard = ({ userInfo, setActiveTab }) => {
           </div>
         </div>
       )}
-
-      {/* No Pending Bills Message */}
       {!stats.hasPendingBill && (
         <div className="bg-green-50 border-l-4 border-green-500 rounded-xl shadow-lg p-6">
           <div className="flex items-center justify-between flex-wrap gap-4">
@@ -159,7 +159,6 @@ const ResidentDashboard = ({ userInfo, setActiveTab }) => {
           </div>
         </div>
       )}
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition">
           <div className="flex items-center justify-between">

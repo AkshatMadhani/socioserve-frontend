@@ -240,7 +240,6 @@ const Polls = ({ userRole, userId }) => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-gray-800">🗳️ Community Polls & Voting</h2>
@@ -260,8 +259,6 @@ const Polls = ({ userRole, userId }) => {
           </button>
         )}
       </div>
-
-      {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
           <div className="flex items-center justify-between">
@@ -291,8 +288,6 @@ const Polls = ({ userRole, userId }) => {
           </div>
         </div>
       </div>
-
-      {/* Active Polls */}
       {activePolls.length > 0 && (
         <div>
           <h3 className="text-xl font-bold text-gray-800 mb-4">🟢 Active Polls</h3>
@@ -411,8 +406,6 @@ const Polls = ({ userRole, userId }) => {
           </div>
         </div>
       )}
-
-      {/* Closed Polls */}
       {closedPolls.length > 0 && (
         <div>
           <h3 className="text-xl font-bold text-gray-800 mb-4">📊 Closed Polls (Results)</h3>
@@ -482,7 +475,6 @@ const Polls = ({ userRole, userId }) => {
         </div>
       )}
 
-      {/* Empty State */}
       {polls.length === 0 && (
         <div className="bg-white rounded-xl shadow-lg p-12 text-center">
           <BarChart3 size={64} className="mx-auto text-gray-400 mb-4" />
@@ -495,7 +487,6 @@ const Polls = ({ userRole, userId }) => {
         </div>
       )}
 
-      {/* Create Poll Modal */}
       {showCreateModal && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"

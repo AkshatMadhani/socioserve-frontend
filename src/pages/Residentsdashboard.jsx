@@ -39,8 +39,7 @@ const ResidentDashboardPage = () => {
         return (
           <Bills 
             userRole={userInfo.userRole} 
-            userId={userInfo.userId}
-            userInfo={userInfo}
+            userInfo={userInfo}  
           />
         );
       

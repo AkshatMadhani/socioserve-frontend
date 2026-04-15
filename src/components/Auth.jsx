@@ -1,8 +1,9 @@
+// Auth.jsx - Update the import (remove useAuth from App import)
 import React, { useState } from 'react';
 import { X, Mail, Lock, User, Home, Loader } from 'lucide-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../App';
+import { useAuth } from '../App'; // Keep this line
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 const AuthUpdated = ({ isOpen, onClose, userType }) => {
@@ -39,7 +40,7 @@ const AuthUpdated = ({ isOpen, onClose, userType }) => {
         let requestBody = {};
 
         if (userType === 'Secretary') {
-          loginEndpoint = `${API_BASE_URL}/admin/login`;
+          loginEndpoint = `${API_BASE_URL}/auth/login`; // Changed from /admin/login
           requestBody = {
             email: formData.email,
             password: formData.password
@@ -219,7 +220,7 @@ const AuthUpdated = ({ isOpen, onClose, userType }) => {
             <div>
               <label className="block text-gray-700 font-semibold mb-2 flex items-center gap-2">
                 <Mail size={18} />
-                {userType === 'Secretary' ? 'Admin Email' : 'Email'}
+                Email
               </label>
               <input
                 type="email"
